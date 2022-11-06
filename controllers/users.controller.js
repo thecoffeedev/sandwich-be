@@ -1,12 +1,12 @@
 const bcrypt = require("bcrypt");
-const { default: UserModel } = require("../models/users.model");
+const UserModel = require("../models/users.model");
 
 const saltRounds = 10;
 
 const createUser = async (username, password, type) => {
   const salt = bcrypt.genSaltSync(saltRounds);
   const hash = bcrypt.hashSync(password, salt);
-  const user = await new UserModel({ username, password: hash, type }).save();
+  const user = await UserModel.create({ username, password: hash, type });
   return user;
 };
 

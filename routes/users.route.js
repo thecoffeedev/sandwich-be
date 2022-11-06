@@ -17,7 +17,7 @@ router.post('/register', (req, res, next) => {
   }
 })
 
-router.post('/login/:username/:password', function(req, res, next) {
+router.get('/login/:username/:password', function(req, res, next) {
   try {
     if (req.params.username && req.params.password ){
       const authenticated = userLogin(req.params.username, req.params.password)

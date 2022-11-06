@@ -6,7 +6,7 @@ const saltRounds = 10;
 const createUser = async (username, password, type) => {
   const salt = bcrypt.genSaltSync(saltRounds);
   const hash = bcrypt.hashSync(password, salt);
-  const user = await UserModel({ username, password: hash, type }).save();
+  const user = await new UserModel({ username, password: hash, type }).save();
   return user;
 };
 

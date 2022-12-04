@@ -13,8 +13,8 @@ const ProductSchema = new Schema(
       enum: ["active", "inactive"],
       default: "active",
     },
-    orderPending: { type: Number },
-    orderPicked: { type: Number },
+    orderPending: { type: Number, default: 0 },
+    orderPicked: { type: Number, default: 0 },
   },
   {
     timestamps: {

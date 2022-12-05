@@ -50,7 +50,7 @@ router.post("/create", async (req, res, next) => {
   }
 });
 
-router.post("/pending", async (req, res, next) => {
+router.get("/pending", async (req, res, next) => {
   try {
     const products = await getPendingOrders();
     res.status(200).send({

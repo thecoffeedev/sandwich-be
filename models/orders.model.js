@@ -7,7 +7,7 @@ const OrderSchema = new Schema(
     sandwichId: { type: Schema.Types.ObjectId, ref: "products" },
     drinkId: { type: Schema.Types.ObjectId, ref: "products" },
     snackId: { type: Schema.Types.ObjectId, ref: "products" },
-    status: { type: String, enum: ["pending", "done"] },
+    status: { type: String, enum: ["pending", "done"], default: "pending" },
     totalPrice: { type: Number },
     name: { type: String },
     address: { type: String },

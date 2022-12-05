@@ -6,7 +6,7 @@ module.exports = {
     return products;
   },
   createProduct: async (productData) => {
-    const product = await ProductsModel.create({ productData });
+    const product = await ProductsModel.create(productData);
     return product;
   },
   getPendingOrders: async () => {
@@ -22,6 +22,6 @@ module.exports = {
       { _id: productId },
       { $set: { productStatus: "inactive" } }
     );
-    return response
+    return response;
   },
 };

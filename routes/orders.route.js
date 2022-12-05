@@ -37,11 +37,30 @@ router.post("/completeOrder", async (req, res, next) => {
     const order = await OrdersModel.findOne({ _id: orderId });
     const updateProducts = await ProductsModel.updateMany(
       { _id: { $in: [sandwichId, drinkId, snackId] } },
-      { $inc: { orderPending: 1 } }
+      { $inc: { orderPending: -1, orderPicked: 1 }, $set: {status: "waitingPick"} }
     );
     res.status(200).send({
       status: "success",
-      message: "Order has been created successfully",
+      message: "Order has been completed successfully",
+      data: order,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.post("/pickOrder", async (req, res, next) => {
+  try {
+    const { orderId } = req.body;
+    const order = await OrdersModel.findOne({ _id: orderId });
+    const updateProducts = await ProductsModel.updateMany(
+      { _id: { $in: [sandwichId, drinkId, snackId] } },
+      { $inc: { orderPicked: -1 }, $set: {status: "done"} }
+    );
+    res.status(200).send({
+      status: "success",
+      message: "Order has been picked successfully",
       data: order,
     });
   } catch (error) {
@@ -56,6 +75,21 @@ router.get("/current", async (req, res, next) => {
     res.status(200).send({
       status: "success",
       message: "Current orders have been fetched successfully",
+      data: orders,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+
+router.get("/waitingForPick", async (req, res, next) => {
+  try {
+    const orders = await OrdersModel.find({ status: "waitingPick" });
+    res.status(200).send({
+      status: "success",
+      message: "Waiting for pick orders have been fetched successfully",
       data: orders,
     });
   } catch (error) {
